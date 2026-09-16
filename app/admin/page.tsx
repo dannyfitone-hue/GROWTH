@@ -7,7 +7,8 @@ export default async function Admin({searchParams}:{searchParams:Promise<{q?:str
   await requireAdminPage(); const db=dbAdmin(); const sp=await searchParams; const q=(sp.q||'').trim();
   let query=db.from('growth_clients').select('id,business_name,industry,status,onboarding_status,start_date,created_at,analysis_status,portal_published,management_fee,ad_budget').order('created_at',{ascending:false}).limit(100);
   if(q) query=query.ilike('business_name',`%${q}%`);
-  const {data:clients=[]}=await query;
+  const {data:clientsData}=await query;
+  const clients=clientsData ?? [];
   const total=clients.length, active=clients.filter((x:any)=>x.status==='active').length, analysis=clients.filter((x:any)=>['queued','running'].includes(x.analysis_status)).length, pending=clients.filter((x:any)=>!x.portal_published).length;
   return <AdminShell>
     <div className="pageHead"><div><div className="eyebrow">OPERATIONS COMMAND CENTER</div><h1>Client Growth Pipeline</h1><p>Research → approve → onboard → activate → execute.</p></div><Link className="btn gold" href="/admin/clients/new">+ Create Client</Link></div>

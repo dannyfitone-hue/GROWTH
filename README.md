@@ -1,3 +1,7 @@
+## V2.0.1 build fix
+- Fixed strict TypeScript nullability for Supabase array query results in Admin dashboard/client workspace.
+- No database migration changes from V2 PRO.
+
 # RL Footage Growth Intelligence CRM — V2 PRO
 
 This build restructures the earlier intake prototype into the workflow Daniel described:

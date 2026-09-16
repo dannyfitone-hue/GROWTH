@@ -13,9 +13,12 @@ export default async function ClientPage({params}:{params:Promise<{id:string}>})
   const {data:c}=await db.from('growth_clients').select('*').eq('id',id).single(); if(!c) notFound();
   const {data:run}=await db.from('growth_analysis_runs').select('*').eq('client_id',id).order('created_at',{ascending:false}).limit(1).maybeSingle();
   const {data:link}=await db.from('growth_intake_links').select('token,status,opened_at,started_at,submitted_at').eq('client_id',id).order('created_at',{ascending:false}).limit(1).maybeSingle();
-  const {data:activity=[]}=await db.from('growth_activity').select('*').eq('client_id',id).order('created_at',{ascending:false}).limit(12);
-  const {data:tasks=[]}=await db.from('growth_tasks').select('*').eq('client_id',id).order('created_at',{ascending:true}).limit(80);
-  const {data:access=[]}=await db.from('growth_account_access').select('*').eq('client_id',id).order('platform',{ascending:true});
+  const {data:activityData}=await db.from('growth_activity').select('*').eq('client_id',id).order('created_at',{ascending:false}).limit(12);
+  const {data:tasksData}=await db.from('growth_tasks').select('*').eq('client_id',id).order('created_at',{ascending:true}).limit(80);
+  const {data:accessData}=await db.from('growth_account_access').select('*').eq('client_id',id).order('platform',{ascending:true});
+  const activity=activityData ?? [];
+  const tasks=tasksData ?? [];
+  const access=accessData ?? [];
   const data=run?.result_json||null; const app=(process.env.NEXT_PUBLIC_APP_URL||'').replace(/\/$/,''); const portalUrl=link?`${app}/p/${link.token}`:'';
   const pipeline=[['01','Research',c.analysis_status==='complete'],['02','Approval',!!c.analysis_approved],['03','Portal',!!c.portal_published],['04','Agreement',c.onboarding_status==='signed'||c.onboarding_status==='complete'],['05','Access',c.onboarding_status==='complete'],['06','Active',c.status==='active']];
   return <AdminShell>
