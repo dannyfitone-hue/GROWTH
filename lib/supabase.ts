@@ -6,3 +6,9 @@ export function dbAdmin() {
   if (!url || !key) throw new Error('Supabase is not configured.');
   return createClient(url, key, { auth: { persistSession: false, autoRefreshToken: false } });
 }
+
+// Backward compatibility for V1 files that may still exist in upload-based deployments.
+// V2 uses dbAdmin(); older routes imported and called `admin()`.
+export function admin() {
+  return dbAdmin();
+}

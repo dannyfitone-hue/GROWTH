@@ -113,3 +113,10 @@ Expected:
 ## OpenAI implementation references
 
 This build follows current OpenAI documentation for the Responses API, background responses, built-in web search and Structured Outputs.
+
+
+## V2.0.2 build compatibility fix
+- Adds backward-compatible `templates` and `admin()` exports for stale V1 files that can remain when a repository is updated via upload instead of a clean replace.
+- Overwrites legacy `/intake/[token]` with a redirect to the V2 `/p/[token]` portal.
+- Retires the legacy `/api/intake/[token]/submit` endpoint.
+- No database migration changes from V2 PRO.

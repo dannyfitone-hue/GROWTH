@@ -24,3 +24,7 @@ export const industryThemes: Record<string, any> = {
     imagery: 'premium local service • growth intelligence • field operations'
   }
 };
+
+// Backward compatibility for V1 files that may still exist in upload-based deployments.
+// V2 uses industryThemes; older routes imported `templates`.
+export const templates = industryThemes;

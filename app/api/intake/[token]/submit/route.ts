@@ -1,2 +1,10 @@
-import {NextResponse} from 'next/server';import {admin} from '../../../../../lib/supabase';
-export async function POST(req:Request,{params}:{params:Promise<{token:string}>}){const {token}=await params,fd=await req.formData(),payload=Object.fromEntries(fd.entries()),db=admin();const {data:l}=await db.from('growth_intake_links').select('client_id').eq('token',token).eq('status','active').single();if(!l)return new NextResponse('Invalid link',{status:404});await db.from('growth_intake_submissions').insert({client_id:l.client_id,intake_link_id:null,payload,progress:100,current_step:'complete',is_final:true});await db.from('growth_intake_links').update({status:'submitted',submitted_at:new Date().toISOString()}).eq('token',token);await db.from('growth_clients').update({status:'active'}).eq('id',l.client_id);await db.from('growth_activity').insert({client_id:l.client_id,activity_type:'intake_completed',description:'Client completed onboarding'});return NextResponse.redirect(new URL(`/intake/${token}/complete`,req.url),303)}
+import { NextResponse } from 'next/server';
+
+// Legacy V1 endpoint. Current portal submissions use /api/portal/[token]/submit.
+export async function POST(_req: Request, { params }: { params: Promise<{ token: string }> }) {
+  const { token } = await params;
+  return NextResponse.json(
+    { error: 'Legacy intake endpoint retired.', redirect: `/p/${token}` },
+    { status: 410 }
+  );
+}
