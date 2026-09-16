@@ -1,0 +1,1 @@
+export default function Complete(){return <main className="shell"><section className="hero"><h1>Onboarding Complete ✓</h1><p>Your information has been securely submitted to RL Footage. Our team will review access, capture the baseline and begin the approved setup sequence.</p></section></main>}
