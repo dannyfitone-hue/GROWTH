@@ -1,33 +1,44 @@
-# RL Footage Growth CRM — V1 foundation
+# RL Footage Growth CRM — V1.1 Fix
 
-Implemented:
-- Client creation
-- Client-specific business name/logo/colors/industry theme
-- Cryptographically random onboarding token
-- Plumbing/restoration-specific service intake
-- Google/website access-status intake (no password collection)
-- Intake submission -> active client status
-- Activity record
-- Database foundation for tasks/files
+## Why "Generate Portal" appeared to do nothing in V1
+The V1 page did not show API/backend errors. If Supabase was not configured, the schema was not installed, or Vercel environment variables were missing, the request failed silently in the UI.
 
-## Setup
-1. Create a Supabase project.
-2. Run `supabase/schema.sql` in Supabase SQL Editor.
-3. Copy `.env.example` to `.env.local` and fill Supabase URL, anon key, and service-role key.
-4. `npm install`
-5. `npm run dev`
-6. Open `/admin/clients/new`.
+V1.1 fixes this by:
+- showing loading state
+- showing exact backend/database errors on screen
+- validating Supabase environment variables
+- rolling back a client row if link creation fails
+- generating an absolute client URL when NEXT_PUBLIC_APP_URL is configured
+- adding Copy Link / Preview buttons
+- adding `/api/health` to test the deployment
 
-## Security before production
-V1 is intentionally not production-exposed yet. Before deploying publicly, add Supabase Auth to all `/admin` routes, Row Level Security policies, private Storage buckets, rate limiting, CAPTCHA/abuse controls on public intake, signed upload URLs, e-signature audit fields, contract versioning, CSRF/origin validation, and server-side validation. Never expose the service-role key to the browser.
+## Required Supabase setup
+1. Create/open your Supabase project.
+2. Open SQL Editor.
+3. Run the entire `supabase/schema.sql` file once.
+4. In Supabase Project Settings > API, copy:
+   - Project URL
+   - service_role key (server only; never expose in browser)
 
-## Next build slice
-- Admin authentication
-- Client dashboard/search
-- Autosave/resume intake
-- Logo upload + brand extraction/approval
-- Agreement/e-signature
-- Asset uploads
-- 90-day task templates
-- PDF export
-- Email notifications
+## Required Vercel environment variables
+In Vercel > Project > Settings > Environment Variables add:
+
+NEXT_PUBLIC_SUPABASE_URL=https://YOURPROJECT.supabase.co
+SUPABASE_SERVICE_ROLE_KEY=YOUR_SERVICE_ROLE_KEY
+NEXT_PUBLIC_APP_URL=https://YOUR-VERCEL-DOMAIN.vercel.app
+
+NEXT_PUBLIC_SUPABASE_ANON_KEY is included in `.env.example` for future browser-side auth but is not needed by the current create-client API.
+
+After adding/changing environment variables, redeploy the project.
+
+## Diagnostic test
+Open:
+`https://YOUR-DOMAIN/api/health`
+
+Expected:
+`{"ok":true,"database":"connected","clients_table":"available"}`
+
+If it returns an error, the message identifies the setup problem.
+
+## Security
+This build is still a development slice. Before giving real clients public links, add Admin Auth, RLS/private storage, rate limiting, e-sign audit fields, secure file uploads and origin/CSRF controls.
