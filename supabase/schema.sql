@@ -1,7 +1,3 @@
-create extension if not exists pgcrypto;
-create table clients(id uuid primary key default gen_random_uuid(),business_name text not null,first_name text,last_name text,email text,website text,industry text default 'general',start_date date,logo_url text,primary_color text default '#0b1f36',accent_color text default '#d8a23d',status text default 'lead',created_at timestamptz default now());
-create table intake_links(id uuid primary key default gen_random_uuid(),client_id uuid references clients(id) on delete cascade,token text unique not null,status text default 'active',created_at timestamptz default now(),submitted_at timestamptz);
-create table intake_submissions(id uuid primary key default gen_random_uuid(),client_id uuid references clients(id) on delete cascade,intake_token text,payload jsonb not null,created_at timestamptz default now());
-create table tasks(id uuid primary key default gen_random_uuid(),client_id uuid references clients(id) on delete cascade,title text not null,phase text,status text default 'todo',priority text default 'normal',due_date date,notes text,created_at timestamptz default now());
-create table activity(id uuid primary key default gen_random_uuid(),client_id uuid references clients(id) on delete cascade,type text,description text,created_at timestamptz default now());
-create table files(id uuid primary key default gen_random_uuid(),client_id uuid references clients(id) on delete cascade,name text,path text,category text,created_at timestamptz default now());
+-- RL Footage Growth CRM tables are isolated from legacy RL Footage tables.
+-- Production schema was installed in Supabase with growth_* table names.
+-- See README for the production migration used.

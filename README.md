@@ -42,3 +42,7 @@ If it returns an error, the message identifies the setup problem.
 
 ## Security
 This build is still a development slice. Before giving real clients public links, add Admin Auth, RLS/private storage, rate limiting, e-sign audit fields, secure file uploads and origin/CSRF controls.
+
+
+## V1.2 database namespace
+This build uses isolated `growth_*` tables so it does not collide with the legacy RL Footage `clients` table. Required production variables: `NEXT_PUBLIC_SUPABASE_URL` and server-only `SUPABASE_SERVICE_ROLE_KEY`.

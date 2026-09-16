@@ -12,7 +12,7 @@ export async function POST(req: Request) {
     const db = admin();
     const token = crypto.randomBytes(24).toString('base64url');
     const { data, error } = await db
-      .from('clients')
+      .from('growth_clients')
       .insert({
         business_name: String(b.business_name).trim(),
         first_name: String(b.first_name).trim(),
@@ -24,7 +24,8 @@ export async function POST(req: Request) {
         logo_url: b.logo_url || null,
         primary_color: b.primary_color || '#0b1f36',
         accent_color: b.accent_color || '#d8a23d',
-        status: 'intake_sent'
+        status: 'intake_sent',
+        onboarding_status: 'not_started'
       })
       .select()
       .single();
@@ -33,9 +34,9 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: `Client could not be created: ${error.message}` }, { status: 400 });
     }
 
-    const { error: linkError } = await db.from('intake_links').insert({ client_id: data.id, token, status: 'active' });
+    const { error: linkError } = await db.from('growth_intake_links').insert({ client_id: data.id, token, status: 'active' });
     if (linkError) {
-      await db.from('clients').delete().eq('id', data.id);
+      await db.from('growth_clients').delete().eq('id', data.id);
       return NextResponse.json({ error: `Portal link could not be created: ${linkError.message}` }, { status: 400 });
     }
 
