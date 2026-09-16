@@ -13,7 +13,6 @@ function baseDeck(title: string, client: any, data: any) {
   pptx.subject = title;
   pptx.title = `${client.business_name} — ${title}`;
   pptx.company = 'RL Footage';
-  pptx.lang = 'en-US';
   pptx.theme = { headFontFace:'Aptos Display', bodyFontFace:'Aptos', lang:'en-US' } as any;
   (pptx as any)._clientAccent = safeHex(data?.brand?.accent_color, C.blue);
   return pptx;
