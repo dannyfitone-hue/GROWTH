@@ -1,3 +1,11 @@
+## V2.0.8 transparent logo and visual polish
+- Cleans the approved silver/white-and-cyan logo background to genuine transparency and removes the dark logo tile, rounded frame and filters.
+- Uses the transparent artwork throughout login, desktop/mobile admin navigation, both portal states, browser icon, PowerPoint reports and the onboarding PDF.
+- Refines logo sizes, header alignment, login copy, form spacing and primary action colors.
+- Improves small-screen layouts, keeps navigation and sign-out available on mobile, prevents sidebar footer overlap, and adds visible keyboard focus and reduced-motion support.
+- Company branding remains Growth Intelligence LLC. No database migration, environment-variable change or paid AI request is required for this update.
+- This is the updated source ZIP. The live CRM is not redeployed by downloading it.
+
 ## V2.0.7 exact supplied logo
 - Replaces the prior artwork with the exact attached silver/white-and-cyan Growth Intelligence LLC logo, without redrawing or modifying its pixels.
 - Applies this logo to login, desktop/mobile admin navigation, both client portal states, browser icon, PowerPoint reports and the onboarding PDF.

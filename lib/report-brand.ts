@@ -7,7 +7,7 @@ let logoData: string | undefined;
 /** Read the same approved asset used by the web UI, with no external requests. */
 export function getCompanyLogoBytes(): Buffer {
   return logoBytes ??= readFileSync(
-    join(process.cwd(), 'public', 'brand', 'growth-intelligence-llc-logo.png')
+    join(process.cwd(), 'public', 'brand', 'growth-intelligence-llc-transparent.png')
   );
 }
 

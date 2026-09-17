@@ -2,12 +2,12 @@ type CompanyLogoProps = {
   variant?: 'sidebar' | 'login' | 'portal' | 'mobile';
 };
 
-/** The approved artwork is used unchanged; never recolor or recreate the mark. */
+/** Approved logo with its background cleaned for seamless placement. */
 export default function CompanyLogo({ variant = 'sidebar' }: CompanyLogoProps) {
   return (
     <img
       className={`companyLogo companyLogo--${variant}`}
-      src="/brand/growth-intelligence-llc-logo.png"
+      src="/brand/growth-intelligence-llc-transparent.png"
       alt="Growth Intelligence LLC"
       width={1536}
       height={1024}
