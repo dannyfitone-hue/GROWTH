@@ -1,4 +1,4 @@
--- RL Footage Growth CRM V2 PRO migration
+-- Growth Intelligence LLC Growth CRM V2 PRO migration
 -- Safe additive migration for the existing growth_* tables.
 
 create extension if not exists pgcrypto;

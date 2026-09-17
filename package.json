@@ -1,6 +1,6 @@
 {
-  "name": "rl-footage-growth-crm-pro",
-  "version": "2.0.3",
+  "name": "growth-intelligence-crm-pro",
+  "version": "2.0.7",
   "private": true,
   "scripts": {
     "dev": "next dev",

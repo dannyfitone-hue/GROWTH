@@ -1,8 +1,9 @@
 import Link from 'next/link';
+import CompanyLogo from '@/components/CompanyLogo';
 export default function AdminShell({children}:{children:React.ReactNode}){
   return <div className="adminLayout">
     <aside className="sidebar">
-      <div className="sideBrand"><b>RL FOOTAGE</b><span>GROWTH INTELLIGENCE CRM</span></div>
+      <Link href="/admin" className="companyBrandHome" aria-label="Growth Intelligence LLC command center"><CompanyLogo /><span>BUSINESS GROWTH COMMAND CENTER</span></Link>
       <nav className="sideNav">
         <Link href="/admin">Command Center</Link>
         <Link href="/admin/clients/new">New Client</Link>
@@ -15,6 +16,6 @@ export default function AdminShell({children}:{children:React.ReactNode}){
         <form action="/api/auth/logout" method="post"><button className="btn ghost" style={{width:'100%'}}>Sign Out</button></form>
       </div>
     </aside>
-    <main className="adminMain"><div className="shell">{children}</div></main>
+    <main className="adminMain"><header className="mobileCompanyHeader"><Link href="/admin" aria-label="Growth Intelligence LLC command center"><CompanyLogo variant="mobile" /></Link><span>Command Center</span></header><div className="shell">{children}</div></main>
   </div>
 }

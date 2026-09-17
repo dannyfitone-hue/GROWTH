@@ -27,7 +27,7 @@ export async function POST(req:Request){
     if(linkError){await db.from('growth_clients').delete().eq('id',data.id);return NextResponse.json({error:linkError.message},{status:400});}
     await db.from('growth_activity').insert({client_id:data.id,activity_type:'client_created',description:'Client intelligence workspace created',metadata:{website_scan:web}});
 
-    // Automatically launch the same deep research workflow that RL Footage would otherwise run manually.
+    // Automatically launch the same deep research workflow that Growth Intelligence LLC would otherwise run manually.
     try {
       const {data:run,error:runErr}=await db.from('growth_analysis_runs').insert({client_id:data.id,status:'queued',progress:8,model:modelName(),prompt_version:'v2.0-deep-public-audit',website_snapshot:web}).select().single();
       if(runErr) throw runErr;

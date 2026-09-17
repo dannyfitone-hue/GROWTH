@@ -1,4 +1,5 @@
 import PptxGenJS from 'pptxgenjs';
+import { getCompanyLogoData } from './report-brand';
 
 const C = { navy:'071827', navy2:'0E2A42', blue:'1D9AD6', cyan:'36C6DB', gold:'D6A33A', green:'34B37A', white:'FFFFFF', light:'EEF4F8', text:'152638', muted:'708399', red:'DF5A5A' };
 
@@ -9,10 +10,10 @@ function safeHex(v?: string, fallback='1D9AD6') {
 function baseDeck(title: string, client: any, data: any) {
   const pptx = new PptxGenJS();
   pptx.layout = 'LAYOUT_WIDE';
-  pptx.author = 'RL Footage Google Growth & Marketing';
+  pptx.author = 'Growth Intelligence LLC';
   pptx.subject = title;
   pptx.title = `${client.business_name} — ${title}`;
-  pptx.company = 'RL Footage';
+  pptx.company = 'Growth Intelligence LLC';
   pptx.theme = { headFontFace:'Aptos Display', bodyFontFace:'Aptos', lang:'en-US' } as any;
   (pptx as any)._clientAccent = safeHex(data?.brand?.accent_color, C.blue);
   return pptx;
@@ -24,7 +25,8 @@ function addTop(slide:any, title:string, sub?:string, accent=C.blue) {
   if(sub) slide.addText(sub,{x:.67,y:1.0,w:11.9,h:.35,fontSize:10.5,color:'B8CBDA',margin:0});
 }
 function footer(slide:any, n:number) {
-  slide.addText(`RL FOOTAGE  •  GOOGLE GROWTH INTELLIGENCE     ${n}`,{x:.65,y:7.12,w:12,h:.18,fontSize:6.5,color:'6E879B',margin:0});
+  slide.addText(`GROWTH INTELLIGENCE LLC  •  BUSINESS GROWTH INTELLIGENCE     ${n}`,{x:.65,y:7.12,w:10.4,h:.18,fontSize:6.5,color:'6E879B',margin:0});
+  slide.addImage({data:getCompanyLogoData(),x:11.48,y:6.52,w:1.2,h:.8,altText:'Growth Intelligence LLC'});
 }
 function card(slide:any,x:number,y:number,w:number,h:number,title:string,body:string,accent:string) {
   slide.addShape('roundRect',{x,y,w,h,rectRadius:.08,fill:{color:'FFFFFF',transparency:2},line:{color:'D5E1E9',transparency:20}});
@@ -35,14 +37,14 @@ function card(slide:any,x:number,y:number,w:number,h:number,title:string,body:st
 function bullets(items:string[]) { return items.slice(0,6).map(x=>`• ${x}`).join('\n'); }
 
 export async function buildAuditPptx(client:any, data:any) {
-  const pptx=baseDeck('Google Growth Audit',client,data); const accent=safeHex(data?.brand?.accent_color,C.blue); let n=1;
+  const pptx=baseDeck('Digital Growth Intelligence Audit',client,data); const accent=safeHex(data?.brand?.accent_color,C.blue); let n=1;
   let s=pptx.addSlide(); s.background={color:C.navy};
   s.addShape('rect',{x:0,y:0,w:13.333,h:7.5,fill:{color:C.navy},line:{color:C.navy}});
   s.addShape('arc',{x:8.4,y:-1.0,w:5.5,h:5.5,adjustPoint:.35,rotate:25,fill:{color:accent,transparency:25},line:{color:accent,transparency:100}} as any);
   s.addText('PRIVATE DIGITAL GROWTH INTELLIGENCE',{x:.7,y:.75,w:5.8,h:.25,fontSize:9,bold:true,charSpacing:1.5,color:accent,margin:0});
-  s.addText(`${client.business_name}\nGoogle Growth Audit`,{x:.7,y:1.45,w:7.1,h:1.55,fontSize:31,bold:true,color:C.white,margin:0,breakLine:false,fit:'shrink'} as any);
+  s.addText(`${client.business_name}\nDigital Growth Intelligence Audit`,{x:.7,y:1.45,w:7.1,h:1.55,fontSize:31,bold:true,color:C.white,margin:0,breakLine:false,fit:'shrink'} as any);
   s.addText(data.executive_summary,{x:.72,y:3.35,w:6.6,h:1.5,fontSize:13,color:'BFD0DD',margin:0.01,fit:'shrink'} as any);
-  s.addText('Prepared exclusively by RL Footage • Google Growth & Marketing',{x:.72,y:6.45,w:6.6,h:.3,fontSize:10,color:C.gold,margin:0}); footer(s,n++);
+  s.addText('Prepared exclusively by Growth Intelligence LLC',{x:.72,y:6.45,w:6.6,h:.3,fontSize:10,color:C.gold,margin:0}); footer(s,n++);
 
   s=pptx.addSlide(); addTop(s,'Executive Intelligence Summary','What public evidence suggests is working, weak, and most important to fix first.',accent);
   card(s,.65,1.55,5.95,4.85,'CURRENT POSITION',data.executive_summary,accent);

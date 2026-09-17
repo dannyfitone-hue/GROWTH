@@ -27,7 +27,7 @@ export default async function ClientPage({params}:{params:Promise<{id:string}>})
     <div className="grid cols4"><div className="kpi"><div className="value">{money(c.management_fee)}</div><div className="label">Management / Month</div></div><div className="kpi"><div className="value">{money(c.ad_budget)}</div><div className="label">Recommended Ad Budget</div></div><div className="kpi"><div className="value">{run?.result_json?.priority_findings?.length||0}</div><div className="label">Research Findings</div></div><div className="kpi"><div className="value">{run?.result_json?.sources?.length||0}</div><div className="label">Evidence Sources</div></div></div>
     <div style={{height:16}}/><AnalysisController clientId={id} initialStatus={c.analysis_status||'not_started'}/>
     {data&&<>
-      <div className="sectionTitle"><div><h2>Intelligence Review</h2><p>Nothing reaches the client until RL Footage approves the analysis.</p></div></div>
+      <div className="sectionTitle"><div><h2>Intelligence Review</h2><p>Nothing reaches the client until Growth Intelligence LLC approves the analysis.</p></div></div>
       <div className="grid cols2">
         <div className="card"><div className="eyebrow">EXECUTIVE SUMMARY</div><h3>Current Position</h3><p className="muted" style={{lineHeight:1.7}}>{data.executive_summary}</p></div>
         <div className="card"><div className="eyebrow">PRIORITY FINDINGS</div>{(data.priority_findings||[]).slice(0,5).map((x:any,i:number)=><div key={i} style={{padding:'10px 0',borderBottom:'1px solid #153044'}}><b>{x.area}</b><div className="small muted">{x.finding}</div></div>)}</div>

@@ -9,7 +9,7 @@ export async function inspectWebsite(url?: string | null) {
   if (!url) return { title: null, description: null, logo: null, hero: null, favicon: null };
   try {
     const normalized = /^https?:\/\//i.test(url) ? url : `https://${url}`;
-    const res = await fetch(normalized, { headers: { 'user-agent': 'RLFootageGrowthBot/1.0' }, redirect: 'follow', cache: 'no-store' });
+    const res = await fetch(normalized, { headers: { 'user-agent': 'GrowthIntelligenceBot/1.0' }, redirect: 'follow', cache: 'no-store' });
     if (!res.ok) throw new Error(`Website returned ${res.status}`);
     const html = await res.text();
     const $ = cheerio.load(html);

@@ -10,7 +10,7 @@ export function openaiClient() {
 export function modelName() { return process.env.OPENAI_MODEL || 'gpt-5.2'; }
 
 export function buildAuditPrompt(client: any, website: any) {
-  return `You are the senior digital growth intelligence engine for RL Footage Google Growth & Marketing.
+  return `You are the senior business growth intelligence engine for Growth Intelligence LLC.
 
 CLIENT
 Business: ${client.business_name}
