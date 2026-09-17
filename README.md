@@ -1,3 +1,40 @@
+## V2.0.10 delete business
+- Adds Delete controls to the Command Center and Client Pipeline, plus Delete business in each client workspace.
+- Opens a keyboard-accessible confirmation dialog with the selected business name. The administrator must type that name before Permanently delete becomes available. Cancel and Escape close the dialog without deleting anything.
+- The server requires the existing signed admin session, a same-origin JSON request and the current business name. It deletes by the selected UUID and name, protecting other businesses with duplicate names and detecting concurrent name changes.
+- Uses one database DELETE. Existing ON DELETE CASCADE relationships remove linked records as part of that same transaction. The app never deletes child records in separate requests. A protected foreign-key relationship blocks the operation and displays an error.
+- After success, the list reloads; deleting from a client workspace returns to Client Pipeline. No real businesses were deleted while preparing this release.
+- Preserves the transparent logo, company branding, six working navigation sections, reports and existing integrations. No paid AI request is needed to delete a business.
+- This source ZIP still needs deployment to update the live CRM.
+
+### Database compatibility
+The bundled V2 migration defines cascading client relationships for analysis runs and onboarding state. The original legacy-table definitions and live database constraints were not available for verification. Deletion relies on the existing client foreign keys for all other linked CRM records. If the app reports protected linked records, a database administrator must review those relationships before deletion can succeed; the app deliberately does not attempt a partial cleanup. No database migration or production data change was run for this release. Downloaded files and external service accounts are outside the scope of CRM deletion.
+
+### V2.0.10 verification
+- Production build and TypeScript checks passed.
+- Local HTTP tests against the production Next.js server passed for every navigation page, report downloads, deletion controls and initially disabled confirmation dialogs.
+- Tested authentication, cross-site rejection, missing/malformed confirmation, exact-name mismatch, unknown record, read/write failures, protected foreign keys, concurrent renames, duplicate business names and repeated deletion requests.
+- With cascading relationships modeled in isolated fixtures, successful deletion removes only the selected business and linked records; the business disappears from all admin sections and its portal, report and PDF links stop serving it.
+- Tests used only synthetic local records. Live database constraints, live deployment and interactive browser behavior have not been verified.
+
+## V2.0.9 working admin navigation
+- Fixes four menu entries that previously linked back to the Command Center.
+- Client Pipeline (`/admin/clients`): searchable client records with program-stage filters and links to client workspaces.
+- Analysis Queue (`/admin/analysis`): saved research status, latest progress, failures, filters and links to review or retry in a client workspace. Opening this page does not start an AI job.
+- 90-Day Operations (`/admin/operations`): existing implementation tasks with client names, phases, recorded statuses and task filters.
+- Reports (`/admin/reports`): availability per client and working audit/roadmap downloads using the existing report endpoints. Download links only appear when a completed analysis with results exists.
+- All admin sections require the existing admin session. Desktop and mobile share the same six navigation destinations and highlight the current section.
+- New tab pages use 25-record pagination; query failures display a load error instead of an empty list.
+- Preserves the transparent logo, client records, existing API workflows and database schema. No new migration or environment variables are required.
+- This source ZIP must be deployed to update the live CRM.
+
+### V2.0.9 verification
+- Production build and TypeScript checks passed.
+- All six navigation destinations were exercised over HTTP against the production Next.js server with isolated local database fixtures.
+- Verified login protection, selected navigation on desktop/mobile markup, client search/stage filters, queue status filters, task filters, pagination, empty/error states, client workspace links and both actual PowerPoint downloads.
+- Confirmed the PowerPoint downloads embed the existing transparent logo.
+- No production database, live deployment or paid AI service was used in these checks. Interactive browser verification and production verification have not been performed.
+
 ## V2.0.8 transparent logo and visual polish
 - Cleans the approved silver/white-and-cyan logo background to genuine transparency and removes the dark logo tile, rounded frame and filters.
 - Uses the transparent artwork throughout login, desktop/mobile admin navigation, both portal states, browser icon, PowerPoint reports and the onboarding PDF.

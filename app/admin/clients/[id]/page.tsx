@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import AdminShell from '@/components/AdminShell';
+import DeleteBusiness from '@/components/DeleteBusiness';
 import AnalysisController from '@/components/AnalysisController';
 import PublishController from '@/components/PublishController';
 import { requireAdminPage } from '@/lib/auth';
@@ -22,7 +23,7 @@ export default async function ClientPage({params}:{params:Promise<{id:string}>})
   const data=run?.result_json||null; const app=(process.env.NEXT_PUBLIC_APP_URL||'').replace(/\/$/,''); const portalUrl=link?`${app}/p/${link.token}`:'';
   const pipeline=[['01','Research',c.analysis_status==='complete'],['02','Approval',!!c.analysis_approved],['03','Portal',!!c.portal_published],['04','Agreement',c.onboarding_status==='signed'||c.onboarding_status==='complete'],['05','Access',c.onboarding_status==='complete'],['06','Active',c.status==='active']];
   return <AdminShell>
-    <div className="pageHead"><div><div className="eyebrow">CLIENT INTELLIGENCE WORKSPACE</div><h1>{c.business_name}</h1><p>{c.website} • {c.industry} • {c.address||'Service area not entered'}</p></div><Link className="btn ghost" href="/admin">← Pipeline</Link></div>
+    <div className="pageHead"><div><div className="eyebrow">CLIENT INTELLIGENCE WORKSPACE</div><h1>{c.business_name}</h1><p>{c.website} • {c.industry} • {c.address||'Service area not entered'}</p></div><div className="clientWorkspaceActions"><Link className="btn ghost" href="/admin/clients">← Pipeline</Link><DeleteBusiness clientId={id} businessName={c.business_name} redirectTo="/admin/clients" /></div></div>
     <div className="pipeline">{pipeline.map(([n,label,done]:any)=><div className={`pipelineStep ${done?'done':''}`} key={label}><div className="num">{n}</div><b>{label}</b></div>)}</div>
     <div className="grid cols4"><div className="kpi"><div className="value">{money(c.management_fee)}</div><div className="label">Management / Month</div></div><div className="kpi"><div className="value">{money(c.ad_budget)}</div><div className="label">Recommended Ad Budget</div></div><div className="kpi"><div className="value">{run?.result_json?.priority_findings?.length||0}</div><div className="label">Research Findings</div></div><div className="kpi"><div className="value">{run?.result_json?.sources?.length||0}</div><div className="label">Evidence Sources</div></div></div>
     <div style={{height:16}}/><AnalysisController clientId={id} initialStatus={c.analysis_status||'not_started'}/>
